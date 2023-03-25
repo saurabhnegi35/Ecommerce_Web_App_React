@@ -34,7 +34,7 @@ const Register = () => {
         onChange={(event) => setEmail(event.target.value)}
         autoFocus
       />
-      <button type="submit" className="btn btn-outline-primary mt-2">
+      <button type="submit" className="btn btn-outline-primary mt-3">
         Register
       </button>
     </form>
