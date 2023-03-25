@@ -16,20 +16,19 @@ const { SubMenu, Item } = Menu;
 const Header = () => {
   const [current, setCurrent] = useState('home');
 
-  const handleClick = (e) => {
+  const handleClick = (event) => {
     // console.log(e.key);
-    setCurrent(e.key);
+    setCurrent(event.key);
   };
 
   return (
     <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
+      <Item key="home" icon={<HomeOutlined />}>
+        <Link style={{ textDecoration: 'none' }} to="/">
+          Home
+        </Link>
+      </Item>
       <div className="container-fluid">
-        <Item key="home" icon={<HomeOutlined />}>
-          <Link style={{ textDecoration: 'none' }} to="/">
-            Home
-          </Link>
-        </Item>
-
         <SubMenu icon={<AndroidOutlined />} title="Username">
           <Item key="setting:1">Option 1</Item>
           <Item key="setting:2">Option 2</Item>
@@ -41,7 +40,7 @@ const Header = () => {
           Login
         </Link>
       </Item>
-      <Item key="" icon={<UserAddOutlined />}>
+      <Item key="register" icon={<UserAddOutlined />}>
         <Link style={{ textDecoration: 'none' }} to="/register">
           Register
         </Link>
