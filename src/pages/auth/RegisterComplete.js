@@ -9,10 +9,49 @@ const RegisterComplete = ({ history }) => {
   useEffect(() => {
     // console.log(window.localStorage.getItem('emailForRegistration'));
     setEmail(window.localStorage.getItem('emailForRegistration'));
+    console.log(window.location.href);
+    console.log(window.localStorage.getItem('emailForRegistration'));
   }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    //Validation
+    if (!email || !password) {
+      toast.error('Email and Password is Required');
+      return;
+    }
+
+    if (password.length < 6) {
+      toast.error('Password must be at least 6 characters long');
+      return;
+    }
+
+    try {
+      const result = await auth.signInWithEmailLink(
+        email,
+        window.location.href
+      );
+      console.log('Result', result);
+      if (result.user.emailVerified) {
+        //Remove User Email from local Storage
+        window.localStorage.removeItem('emailFormRegistration');
+
+        //Get user Id Token
+        let user = auth.currentUser;
+        await user.updatePassword(password);
+        const idTokenResult = await user.getIdTokenResult();
+
+        //Populate User in Redux Store
+        console.log('user', user, 'idTokenResult', idTokenResult);
+
+        //Redirect
+        history.push('/');
+      }
+    } catch (err) {
+      console.log(err);
+      toast.error(err.message);
+    }
   };
 
   const completeRegistrationForm = () => (
@@ -24,7 +63,7 @@ const RegisterComplete = ({ history }) => {
         value={password}
         onChange={(event) => setPassword(event.target.value)}
         placeholder="Password"
-        autofocus
+        autoFocus
       />
       <button type="submit" className="btn btn-outline-primary mt-3">
         Complete Registration

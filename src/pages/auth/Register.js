@@ -6,17 +6,21 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const url = process.env.REACT_APP_REGISTER_REDIRECT_URL;
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    // console.log('env no ---->', url);
-    const config = {
-      url: url,
-      handleCodeInApp: true,
-    };
-    await auth.sendSignInLinkToEmail(email, config);
-    toast.success(
-      `Email is sent to ${email}. Click the link to complete your registration.`
-    );
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      // console.log('env no ---->', url);
+      const config = {
+        url: url,
+        handleCodeInApp: true,
+      };
+      await auth.sendSignInLinkToEmail(email, config);
+      toast.success(
+        `Email is sent to ${email}. Click the link to complete your registration.`
+      );
+    } catch (err) {
+      toast.error(err.message);
+    }
 
     //Save User Email in Local Storage
     window.localStorage.setItem('emailForRegistration', email);
@@ -31,7 +35,7 @@ const Register = () => {
         type="email"
         className="form-control"
         value={email}
-        onChange={(event) => setEmail(event.target.value)}
+        onChange={(e) => setEmail(e.target.value)}
         autoFocus
       />
       <button type="submit" className="btn btn-outline-primary mt-3">
