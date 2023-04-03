@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { auth } from '../../firebase';
 import { toast } from 'react-toastify';
 
-const RegisterComplete = ({ history }) => {
+const RegisterComplete = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
