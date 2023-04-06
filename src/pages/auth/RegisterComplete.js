@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 const RegisterComplete = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate();
+  const history = useNavigate();
 
   useEffect(() => {
     // console.log(window.localStorage.getItem('emailForRegistration'));
@@ -48,7 +48,7 @@ const RegisterComplete = () => {
         console.log('user', user, 'idTokenResult', idTokenResult);
 
         //Redirect
-        navigate('/');
+        history('/');
       }
     } catch (err) {
       console.log(err);
