@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { auth } from '../../firebase';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 // import { useNavigate } from 'react-router-dom';
 // import { useSelector } from 'react-redux';
 // import { Link } from 'react-router-dom';
@@ -9,6 +11,15 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const url = process.env.REACT_APP_FORGOT_PASSWORD_REDIRECT_URL;
+
+  const { user } = useSelector((state) => ({ ...state }));
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user && user.token) {
+      navigate('/');
+    }
+  }, [user]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();

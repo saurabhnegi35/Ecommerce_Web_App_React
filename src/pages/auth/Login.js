@@ -1,18 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { auth, googleAuthProvider } from '../../firebase';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Button } from 'antd';
 import { MailOutlined, GoogleOutlined } from '@ant-design/icons';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const { user } = useSelector((state) => ({ ...state }));
   const navigate = useNavigate();
-  // const url = process.env.REACT_APP_REGISTER_REDIRECT_URL;
+
+  useEffect(() => {
+    if (user && user.token) {
+      navigate('/');
+    }
+  }, [user]);
 
   let dispatch = useDispatch();
 
