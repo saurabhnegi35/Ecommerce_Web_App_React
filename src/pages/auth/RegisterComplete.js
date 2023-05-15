@@ -57,7 +57,7 @@ const RegisterComplete = () => {
         createOrUpdateUser(idTokenResult.token)
           .then((res) => {
             dispatch({
-              type: 'LOGGED_IN_USER',
+              type: 'LOGGED_IT_USER',
               payload: {
                 name: res.data.displayName,
                 email: res.data.email,
