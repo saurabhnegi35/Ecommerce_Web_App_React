@@ -67,7 +67,7 @@ const RegisterComplete = () => {
               },
             });
           })
-          .catch();
+          .catch((err) => console.log(err));
 
         //Redirect
         history('/');
